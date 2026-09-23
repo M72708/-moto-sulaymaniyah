@@ -13,7 +13,7 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
-      - run: flutter pub get
+      - run: unzip -o "Moto_V32 2.zip"
       - run: flutter create . --platforms=android
       - run: flutter pub get
       - run: flutter build apk --debug
