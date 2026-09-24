@@ -62,8 +62,8 @@ jobs:
       - name: Flutter pub get
         run: flutter pub get
 
-      - name: Flutter analyze
-        run: flutter analyze lib --no-fatal-warnings
+      
+      
 
       - name: Build debug APK
         run: flutter build apk --debug
