@@ -39,14 +39,26 @@ jobs:
           from pathlib import Path
           import re
 
-          app = Path('android/app/build.gradle')
+          app = Path("android/app/build.gradle.kts")
           text = app.read_text()
-          text = re.sub(r'namespace\s*=\s*["\'][^"\']+["\']', 'namespace = "com.moto.sulaymaniyah"', text)
-          text = re.sub(r'applicationId\s*[= ]\s*["\'][^"\']+["\']', 'applicationId = "com.moto.sulaymaniyah"', text)
+
+          text = re.sub(r'namespace\s*=\s*"[^"]*"', 'namespace = "com.moto.sulaymaniyah"', text, count=1)
+          text = re.sub(r'applicationId\s*=\s*"[^"]*"', 'applicationId = "com.moto.sulaymaniyah"', text, count=1)
+
+          if 'id("com.google.gms.google-services")' not in text:
+              text = text.replace('plugins {\n', 'plugins {\n    id("com.google.gms.google-services")\n', 1)
+
           app.write_text(text)
+
+          settings = Path("android/settings.gradle.kts")
+          s = settings.read_text()
+
+          if 'id("com.google.gms.google-services") version "4.5.0" apply false' not in s:
+              s = s.replace('plugins {\n', 'plugins {\n    id("com.google.gms.google-services") version "4.5.0" apply false\n', 1)
+
+          settings.write_text(s)
           PY
           test -f android/app/google-services.json
-
       - name: Flutter pub get
         run: flutter pub get
 
