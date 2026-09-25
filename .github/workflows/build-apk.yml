@@ -22,7 +22,7 @@ jobs:
           set -e
           rm -rf /tmp/moto_src
           mkdir -p /tmp/moto_src
-          unzip -q "Moto_PHONE_LOGIN (1).zip" -d /tmp/moto_src
+          unzip -q "Moto_PHONE_LOGIN 2.zip" -d /tmp/moto_src
           src=$(find /tmp/moto_src -name pubspec.yaml -type f -print -quit); src=$(dirname "$src")
           test -n "$src"
           cp -R "$src"/. .
